@@ -1,28 +1,18 @@
 from django.db import models
-from django.utils import timezone
+
+from markdownx.models import MarkdownxField
+from django.contrib.flatpages.models import FlatPage
+
+class Post(FlatPage):
+    seo = models.CharField(blank=True, max_length=100)
+    markdown = MarkdownxField(blank=True)
+    thumbnail = models.ImageField(null = True, blank = True)
+    category = models.ForeignKey('Category', related_name='pages', blank=True, null=True)
 
 
-class Post(models.Model):
-    author = models.ForeignKey('auth.User')
-    title = models.CharField('Заголовок',max_length=200)
-    text = models.TextField('Текст')
-    created_date = models.DateTimeField('Дата создания',default=timezone.now)
-    published_date = models.DateTimeField('Дата публикации',blank=True, null=True)
-
-    def publish(self):
-        self.published_date = timezone.now()
-        self.save()
-
-    def __str__(self):
-        return self.title
-
-
-class AboutMe(models.Model):
-    author = models.ForeignKey('auth.User')
-    title = models.CharField('Заголовок',max_length=200)
-    text = models.TextField('Текст')
-    image = models.ImageField('Грамота')
-    published_date = models.DateTimeField('Дата публикации',blank=True, null=True)
+class Category(models.Model):
+    name = models.CharField(blank=True, max_length=100)
+    slug = models.SlugField(blank=True)
 
     def __str__(self):
-        return self.title
+        return self.slug
