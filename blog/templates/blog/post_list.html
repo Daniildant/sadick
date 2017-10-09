@@ -1,0 +1,26 @@
+{% extends 'blog/base.html' %}
+
+{% block content2 %}
+    {% for aboutme in about_list %}
+        <div class="service">
+            <h4>{{ aboutme.title }}</h4>
+            <p>{{ aboutme.text|linebreaksbr }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block content3 %}
+    <div class="event">
+        <h2>Работы</h2>
+        <p>
+           <i class="pe-7s-ribbon"></i>
+        </p>
+    </div>
+    {% for post in posts %}
+        <div class="event">
+            <h3>{{ post.published_date }}</h3>
+            <h4><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h4>
+            <p>{{ post.text|linebreaksbr }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}
