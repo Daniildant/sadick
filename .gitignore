@@ -81,3 +81,6 @@ venv/
 
 *.sqlite3
 yarn.lock
+markdownx/
+static/
+db.sqlite3
